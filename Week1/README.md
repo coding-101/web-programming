@@ -1,16 +1,16 @@
+## Internet
+- 여러 컴퓨터가 연결된 Network
+- HTTP, FTP 등 여러 [프로토콜](https://ko.wikipedia.org/wiki/%ED%86%B5%EC%8B%A0_%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)을 통해 정보 자원이 제공될 수 있음
+
 ## World Wide Web(WWW, the web)
 - 인터넷을 통해 문서, 정보를 공유할 수 있는 정보 공간
 - [URL](https://ko.wikipedia.org/wiki/URL)을 통해서 식별할 수 있음
 
 #### 표준
-- 문서 내용: Markup Language를 이용하여 작성(HTML)
+- 문서 내용: HTML을 이용해 작성
 - 문서 디자인: CSS을 이용해 작성
 - DOM을 이용해 문서 구조 표현
 
-## Internet
-- 여러 컴퓨터가 연결된 Network
-- HTTP, FTP 등 여러 [프로토콜](https://ko.wikipedia.org/wiki/%ED%86%B5%EC%8B%A0_%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)을 통해 정보 자원이 제공될 수 있음
--
 
 ## HTML이란?
 - Hyper Text Markup Language의 약자
