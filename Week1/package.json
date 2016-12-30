@@ -1,0 +1,15 @@
+{
+  "name": "Week1",
+  "version": "1.0.0",
+  "description": "- 여러 컴퓨터가 연결된 Network - HTTP, FTP 등 여러 [프로토콜](https://ko.wikipedia.org/wiki/%ED%86%B5%EC%8B%A0_%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)을 통해 정보 자원이 제공될 수 있음",
+  "main": "express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
