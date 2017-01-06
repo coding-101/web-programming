@@ -4,22 +4,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 		<title>Todo List</title>
-   	<!--
-      Materialize CSS, JS파일을 불러들인다.
-       - 불러들인 파일을 통해서 별도의 CSS를 복잡하게 작성하지 않고 클래스만 부여하여 스타일링을 완성할 수 있다.
-    -->
+	 	<!--
+			Materialize CSS, JS파일을 불러들인다.
+			 - 불러들인 파일을 통해서 별도의 CSS를 복잡하게 작성하지 않고 클래스만 부여하여 스타일링을 완성할 수 있다.
+		-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <!-- to use icon -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- to use icon -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
 
 		<style media="screen">
-	    html {
-	    	font-family: GillSans, Calibri, Trebuchet, sans-serif;
-	    }
-	  </style>
+			html {
+				font-family: GillSans, Calibri, Trebuchet, sans-serif;
+			}
+		</style>
 	</head>
 	<body>
 
@@ -31,53 +31,53 @@
 
 			<!-- header of html -->
 			<!--
-        row: materialize class
-        - 하나의 행을 만든다
-      -->
+				row: materialize class
+				- 하나의 행을 만든다
+			-->
 			<div id="header" class="row">
 				<h1>Todo List</h1>
 
 				<!--
-	        divider: materialize class
-	        - 수평 구분선을 긋는다
-	      -->
-	      <div class="divider"></div>
+					divider: materialize class
+					- 수평 구분선을 긋는다
+				-->
+				<div class="divider"></div>
 			</div>
 			<!-- header of html -->
 
 			<!-- nav of todo -->
 			<div class="row">
 				<!--
-          col: materialize class
-           - row를 수평으로 쪼개는 column을 만든다
+					col: materialize class
+					 - row를 수평으로 쪼개는 column을 만든다
 
 					s3, m3: materialize class
-	         1. 앞 문자는 디스플레이 사이즈를 의미하며, small, midium, large의 약자이다
-	          - small은 모바일, medium은 테블릿, large는 데스크톱 화면에 대응한다
-	         2. 뒤 숫자는 column의 너비 이다.
-	          - 한 row가 12의 너비를 가지고 있다고 가정하면, 3개의 div요소에 s3, s6, s3클래스를 각각 부여해서 한 row를 채울 수 있다.
+					 1. 앞 문자는 디스플레이 사이즈를 의미하며, small, midium, large의 약자이다
+						- small은 모바일, medium은 테블릿, large는 데스크톱 화면에 대응한다
+					 2. 뒤 숫자는 column의 너비 이다.
+						- 한 row가 12의 너비를 가지고 있다고 가정하면, 3개의 div요소에 s3, s6, s3클래스를 각각 부여해서 한 row를 채울 수 있다.
 
 					Todo List에 3, Present Todos에 6, Completed todos에 3의 너비를 둔다
-        -->
+				-->
 
 				<!--
-          flow-text: materialize class
-           - 텍스트를 모바일 환경에 최적화 시켜 보여줌
-        -->
+					flow-text: materialize class
+					 - 텍스트를 모바일 환경에 최적화 시켜 보여줌
+				-->
 				<div class="col s3 m3">
 					<h3 class="flow-text">
-            Todo List
-          </h3>
+						Todo List
+					</h3>
 				</div>
 				<div class="col s6 m6">
 					<h3 class="flow-text">
-            Present Todos
-          </h3>
+						Present Todos
+					</h3>
 				</div>
 				<div class="col s3 m3">
 					<h3 class="flow-text">
-            Completed Todos
-          </h3>
+						Completed Todos
+					</h3>
 				</div>
 			</div>
 			<!-- nav of todo -->
@@ -89,14 +89,14 @@
 				<!-- todo list -->
 				<div class="col s3 m3">
 					<!--
-            collection: materialize class
-             - http://materializecss.com/collections.html
-          -->
-          <ul class="collection">
-            <li class="collection-item">학교</li>
-            <li class="collection-item">회사</li>
-            <li class="collection-item">프로젝트</li>
-          </ul>
+						collection: materialize class
+						 - http://materializecss.com/collections.html
+					-->
+					<ul class="collection">
+						<li class="collection-item">학교</li>
+						<li class="collection-item">회사</li>
+						<li class="collection-item">프로젝트</li>
+					</ul>
 				</div>
 				<!-- todo list -->
 
@@ -104,9 +104,9 @@
 				<!-- current todos -->
 				<div class="col s6 m6">
 					<!--
-            card: materialize class
-             - http://materializecss.com/cards.html
-          -->
+						card: materialize class
+						 - http://materializecss.com/cards.html
+					-->
 
 					<div class="card blue-grey darken-1 z-depth-4">
 						<div class="card-content white-text">
@@ -121,18 +121,18 @@
 
 
 					<div class="card blue-grey darken-1 z-depth-4">
-            <div class="card-content white-text">
-              <span class="card-title activator">밥 먹기</span>
-            </div>
-            <div class="card-reveal grey lighten-4">
-              <span class="card-title">밥 먹기<i class="material-icons right">close</i></span>
-              <p>집에서 밥을 먹는다. 오늘 저녁은 냉장고에 반찬이 없기 때문에 간단하게 계란에 간장을 비벼 먹자.</p>
-            </div>
-            <div class="card-action">
-              <a href="#">완료</a>
-              <a href="#">삭제</a>
-            </div>
-          </div>
+						<div class="card-content white-text">
+							<span class="card-title activator">밥 먹기</span>
+						</div>
+						<div class="card-reveal grey lighten-4">
+							<span class="card-title">밥 먹기<i class="material-icons right">close</i></span>
+							<p>집에서 밥을 먹는다. 오늘 저녁은 냉장고에 반찬이 없기 때문에 간단하게 계란에 간장을 비벼 먹자.</p>
+						</div>
+						<div class="card-action">
+							<a href="#">완료</a>
+							<a href="#">삭제</a>
+						</div>
+					</div>
 
 				</div>
 						<!-- current todos -->
@@ -141,8 +141,8 @@
 				<!-- completed todos -->
 				<div class="col s3 m3">
 					<div class="chip">대청소</div>
-          <div class="chip">고구마 캐기</div>
-          <div class="chip">로켓단 맞이하기</div>
+					<div class="chip">고구마 캐기</div>
+					<div class="chip">로켓단 맞이하기</div>
 				</div>
 				<!-- completed todos -->
 
