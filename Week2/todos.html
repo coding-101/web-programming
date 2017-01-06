@@ -30,20 +30,37 @@
 		<div class="container">
 
 			<!-- header of html -->
-			<div id="header">
+			<!--
+        row: materialize class
+        - 하나의 행을 만든다
+      -->
+			<div id="header" class="row">
 				<h1>Todo List</h1>
 			</div>
 			<!-- header of html -->
 
 			<!-- nav of todo -->
-			<div>
-				<div>
+			<div class="row">
+				<!--
+          col: materialize class
+           - row를 수평으로 쪼개는 column을 만든다
+
+					s3, m3: materialize class
+	         1. 앞 문자는 디스플레이 사이즈를 의미하며, small, midium, large의 약자이다
+	          - small은 모바일, medium은 테블릿, large는 데스크톱 화면에 대응한다
+	         2. 뒤 숫자는 column의 너비 이다.
+	          - 한 row가 12의 너비를 가지고 있다고 가정하면, 3개의 div요소에 s3, s6, s3클래스를 각각 부여해서 한 row를 채울 수 있다.
+
+					Todo List에 3, Present Todos에 6, Completed todos에 3의 너비를 둔다
+        -->
+
+				<div class="col s3 m3">
 					Todo List
 				</div>
-				<div>
+				<div class="col s6 m6">
 					Present Todos
 				</div>
-				<div>
+				<div class="col s3 m3">
 					Completed Todos
 				</div>
 			</div>
@@ -51,10 +68,10 @@
 
 
 			<!-- content of todo -->
-			<div>
+			<div class="row">
 
 				<!-- todo list -->
-				<div>
+				<div class="col s3 m3">
 					<ul>
 						<li>학교</li>
 						<li>회사</li>
@@ -65,7 +82,7 @@
 
 
 				<!-- current todos -->
-				<div>
+				<div class="col s6 m6">
 
 					<div>
 						<div>
@@ -95,7 +112,7 @@
 
 
 				<!-- completed todos -->
-				<div>
+				<div class="col s3 m3">
 					<div>대청소</div>
 					<div>고구마 캐기</div>
 					<div>로켓단 맞이하기</div>
