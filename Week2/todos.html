@@ -103,29 +103,36 @@
 
 				<!-- current todos -->
 				<div class="col s6 m6">
+					<!--
+            card: materialize class
+             - http://materializecss.com/cards.html
+          -->
 
-					<div>
-						<div>
-							<span>밥 먹기</span>
+					<div class="card blue-grey darken-1 z-depth-4">
+						<div class="card-content white-text">
+							<span class="card-title">밥 먹기</span>
 							<p>집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.</p>
 						</div>
-						<div>
+						<div class="card-action">
 							<a href="#">완료</a>
 							<a href="#">삭제</a>
 						</div>
 					</div>
 
 
-					<div>
-						<div>
-							<span>빨래</span>
-							<p>세탁기를 돌리고 세탁소에 들러서 옷을 가져오자.</p>
-						</div>
-						<div>
-							<a href="#">완료</a>
-							<a href="#">삭제</a>
-						</div>
-					</div>
+					<div class="card blue-grey darken-1 z-depth-4">
+            <div class="card-content white-text">
+              <span class="card-title activator">밥 먹기</span>
+            </div>
+            <div class="card-reveal grey lighten-4">
+              <span class="card-title">밥 먹기<i class="material-icons right">close</i></span>
+              <p>집에서 밥을 먹는다. 오늘 저녁은 냉장고에 반찬이 없기 때문에 간단하게 계란에 간장을 비벼 먹자.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">완료</a>
+              <a href="#">삭제</a>
+            </div>
+          </div>
 
 				</div>
 						<!-- current todos -->
