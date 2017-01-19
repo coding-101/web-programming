@@ -295,6 +295,15 @@
         draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
 
+      function delete_todo(current_todo_index) {
+        // 현재 보여지는 todo_list를 선택합니다.
+        var todo_list = todo_lists[current_todo_list_index]
+
+        // current_todo에 있던 todo를 제거합니닫.
+        todo_list.current_todos.pop(current_todo_index)
+        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
+      }
+
       ////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////
 
@@ -370,7 +379,7 @@
           </div>
           <div class="card-action">
             <a href="#" onclick="complete_todo(${index})">완료</a>
-            <a href="#">삭제</a>
+            <a href="#" onclick="delete_todo(${index})">삭제</a>
           </div>
         `
         return div
