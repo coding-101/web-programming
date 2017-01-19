@@ -1,535 +1,497 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-		<title>Todo List</title>
-	 	<!--
-			Materialize CSS, JS파일을 불러들인다.
-			 - 불러들인 파일을 통해서 별도의 CSS를 복잡하게 작성하지 않고 클래스만 부여하여 스타일링을 완성할 수 있다.
-		-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-
-		<!-- css 파일 불러오기 -->
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-
-		<!--
-			container: materialize class
-			 - div 요소에 좌우 여백을 만든다.
-		-->
-		<div class="container">
-
-			<!-- header of html -->
-			<!--
-				row: materialize class
-				- 하나의 행을 만든다
-			-->
-			<div id="header" class="row">
-				<h1>Todo List</h1>
-
-				<!--
-					divider: materialize class
-					- 수평 구분선을 긋는다
-				-->
-				<div class="divider"></div>
-			</div>
-			<!-- header of html -->
-
-			<!-- nav of todo -->
-			<div id="nav-todo" class="row">
-				<!--
-					col: materialize class
-					 - row를 수직으로 쪼개는 column을 만든다
-
-					s3, m3: materialize class
-					 1. 앞 문자는 디스플레이 사이즈를 의미하며, small, midium, large의 약자이다
-						- small은 모바일, medium은 테블릿, large는 데스크톱 화면에 대응한다
-					 2. 뒤 숫자는 column의 너비 이다.
-						- 한 row가 12의 너비를 가지고 있다고 가정하면, 3개의 div요소에 s3, s6, s3클래스를 각각 부여해서 한 row를 채울 수 있다.
-
-					Todo List에 3, Present Todos에 6, completed todos에 3의 너비를 둔다
-				-->
-
-				<!--
-					flow-text: materialize class
-					 - 텍스트를 모바일 환경에 최적화 시켜 보여줌
-				-->
-				<div class="col s3 m3">
-					<h3 class="flow-text">
-						Todo List
-					</h3>
-				</div>
-				<div class="col s6 m6">
-					<h3 class="flow-text">
-						Present Todos
-					</h3>
-				</div>
-				<div class="col s3 m3">
-					<h3 class="flow-text">
-						completed Todos
-					</h3>
-				</div>
-			</div>
-			<!-- nav of todo -->
-
-
-			<!-- content of todo -->
-			<div class="row">
-
-				<!-- todo list -->
-				<div class="col s3 m3">
-					<!--
-						collection: materialize class
-						 - http://materializecss.com/collections.html
-					-->
-					<ul id="todo-list" class="collection">
-						<li class="collection-item">학교</li>
-						<li class="collection-item">회사</li>
-						<li class="collection-item" editable >프로젝트</li>
-					</ul>
-				</div>
-				<!-- todo list -->
-
-
-				<!-- current todos -->
-				<div id="current-todos" class="col s6 m6">
-					<!--
-						card: materialize class
-						 - http://materializecss.com/cards.html
-					-->
-
-					<!-- Card template 1 -->
-					<div class="card blue-grey darken-1 z-depth-4">
-						<div class="card-content white-text">
-							<span class="card-title">밥 먹기</span>
-							<p>집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.</p>
-						</div>
-						<div class="card-action">
-							<a href="#">완료</a>
-							<a href="#">삭제</a>
-						</div>
-					</div>
-
-					<!-- Card template 2 -->
-					<div class="card blue-grey darken-1 z-depth-4">
-						<div class="card-content white-text">
-							<span class="card-title activator">빨래 하기</span>
-						</div>
-						<div class="card-reveal grey lighten-4">
-							<span class="card-title">밥 먹기<i class="material-icons right">close</i></span>
-							<p>세탁기를 돌리고 세탁소에 들러서 옷을 가져오자.</p>
-						</div>
-						<div class="card-action">
-							<a href="#">완료</a>
-							<a href="#">삭제</a>
-						</div>
-					</div>
-
-				</div>
-				<!-- current todos -->
-
-
-				<!-- completed todos -->
-				<div id="completed-todos" class="col s3 m3">
-					<div class="chip">대청소</div>
-					<div class="chip">고구마 캐기</div>
-					<div class="chip">로켓단 맞이하기</div>
-				</div>
-				<!-- completed todos -->
-
-			</div>
-			<!-- content of todo -->
-
-			<!-- button -->
-			<!--
-				fixed-action-btn: materialize class
-				 - http://materializecss.com/buttons.html#!
-			-->
-			<div id="button" class="fixed-action-btn">
-				<a class="btn-floating btn-large red">
-					<i class="large material-icons">mode_edit</i>
-				</a>
-				<ul>
-					<!-- 각 버튼을 클릭했을 때 todo list를 추가하거나 todo 를 추가합니다. -->
-					<li><a class="btn-floating red" onclick="add_todo_list()"><i class="material-icons">playlist_add</i></a></li>
-					<li><a class="btn-floating yellow darken-1" onclick="add_todo()"><i class="material-icons">note_add</i></a></li>
-				</ul>
-
-			</div>
-			<!-- button -->
-
-		</div>
-		<!-- container -->
-
-
-		<!-- Javascript -->
-		<script>
-			// Javascript 코드는 script 태그 안에 위치합니다.
-			//
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			var todo_lists = []; // tood list 들의 배열입니다.
-			var current_todo_list_index = 0; // 현제 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			/**
-			 * 앞에 선언한 두 전역변수를 초기화합니다.
-			 * 지금은 미리 지정한 데이터로만 초기화 하지만,
-			 * 웹 서버를 만든다면 서버에서 데이터를 가져오는 부분을 init_data에서 처리할 것입니다.
-			 */
-			function init_data() {
-				current_todo_list_index = 0; // 현제 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
-				todo_lists = [
-					// 하나의 Todo list 는 title, current_todos, completed_todo 로 구서되어 있습니다.
-					// title은 #todo-list 에 보여지는 todo list의 제목입니다
-					// current_todos는 #current-todos 에 보여지는 개별적인 todo 들의 배열입니다.
-					// completed_todos는 #completed-todos 에 보여지는 완료한 todo 들의 배열입니다.
-
-					// 앞으로 작성할 JS 코드를 통해 페이지에 보여지는 Todo 들을 조작할 것입니다.
-					// 필요한 기능은
-					//  1. Todo List 추가하기
-					//  2. List에 Todo 추가하기
-					//  3. Todo를 완료 상태로 변경하기
-					//  4. 선택한 Todo List 변경하기
-					// 입니다.
-
-					// 학교 Todo list
-					{
-						title: '학교',
-						current_todos: [
-							{ title: '밥 먹기', description: '집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.' },
-							{ title: '빨래', description: '주말에 세탁기를 돌리고 세탁소에서 옷을 가져오자.' },
-						],
-						completed_todos: [
-							{ title: '로켓단 맞이하기', description: '' },
-							{ title: '고구마 캐기', description: '자색 고구마는 정말 맛있다.' },
-						],
-					},
-
-					// 회사 Todo list
-					{
-						title: '회사',
-						current_todos: [
-							{ title: 'Facebook 게시하기', description: '카드 뉴스를 금요일 저녁에 업로드하자.' },
-							{ title: '회의 준비', description: '앞으로 진행할 프로젝트에 대해 요약하고 아이데이션을 위한 자료를 만들자.' },
-						],
-						completed_todos: [
-							{ title: '웹 서버 프로토타입 개발', description: '요구사항을 간단히 구현해 피드백을 받아보자.' },
-						],
-					},
-
-					// 웹 서버 Todo List
-					{
-						title: '웹 서버',
-						current_todos: [
-							{ title: '결제 페이지', description: '결제 과정을 처리하는 페이지를 만들자' },
-							{ title: '결제 API', description: '서버에서 결제를 진행할 API를 만들자' },
-						],
-						completed_todos: [
-							{ title: '메인 페이지', description: '메인 페이지 퍼블리시' },
-							{ title: '프로젝트 디테일 페이지', description: '프로젝트 디테일 페이지 퍼블리시' },
-							{ title: '프로젝트 댓글 페이지', description: '프로젝트 댓글 페이지 퍼블리시' },
-						],
-					},
-				];
-			}
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			// 앞으로 선언할 4개의 함수를 통해 todo list 의 정보를 조작할 것입니다.
-			// 새로운 todo list, todo를 만들 때, todo를 완료할 때, 앞에 선언된 todo_lists 변수는 계속 변할 것입니다.
-			// 사용자의 행동, 이벤트(버튼 클릭 등)으로 JS 변수를 조작 해 봅시다.
-			//
-			// *** 아래 4 함수는 HTML을 작성하는 것이 아니라 JS 변수르 조작하는 것 뿐입니다
-			// *** JS 변수 값에 따라 HTML 문서를 작성하는 것은 이 다음 섹션에서 다룹니다.
-			// *** javascript를 조작하는 것과 HTML 문서를 실제로 작성하는 것은 별개라는 것을 명심 해 주세요.
-
-
-			/**
-			 * change_todo_list 함수는 현제 선택된 todo list를 변경합니다.
-			 * 브라우저가 로딩되면 0번째 todo list를 가리키도록 초기화하였지만
-			 * 사용자가 다른 todo list를 선택할 수 있습니다.
-			 * 이 함수는 #todo-list li 를 클릭할 때 실행되어야 합니다.
-			 *
-			 *   - 아래 보이는 @param은 함수의 인자를, @return은 함수의 반환 값을 의미합니다.
-			 *   - @param, @return 다음에는 인자의 자료형, 변수명, 변수의 설명이 이어집니다.
-			 *
-			 * @param  Number   new_todo_list_index 새로 선택할 list의 인덱스 입니다.
-			 * @return 이 함수는 값을 반환하지 않습니다.
-			 */
-			function change_todo_list(new_todo_list_index) {
-				current_todo_list_index = new_todo_list_index;
-				draw()
-			}
-
-			/**
-			 * add_todo_list 함수는 새로운 todo list를 생성합니다.
-			 * 사용자로부터 todo list의 제목을 입력받아야 하기 때문에 prompt() 를 이용합니다.
-			 */
-			function add_todo_list() {
-				// prompt 함수는 python의 input 함수와 유사합니다.
-				var title = prompt('생성할 Todo List의 제목을 입력하세요.')
-
-				var new_todo_list = {
-					title: title,
-					current_todos: [],
-					completed_todos: [],
-				}
-
-				todo_lists.push(new_todo_list)
-
-				draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
-			}
-
-			/**
-			 * 새로운 todo를 생성해 #current-todos를 갱신합니다.
-			 */
-			function add_todo() {
-				var title = prompt('생성할 Todo의 제목을 입력하세요.')
-				var description = prompt('생성할 Todo의 설명을 입력하세요.')
-
-				// 현재 보여지는 todo_list를 선택합니다.
-				var todo_list = todo_lists[current_todo_list_index]
-				var new_todo = {
-					title: title,
-					description: description
-				}
-				todo_list.current_todos.push(new_todo)
-
-				draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
-			}
-
-			/**
-			 * current todo를 완료 상태로 변경합니다.
-			 * 이 함수는 완료 버튼을 클릭하면 실행되어야 합니다.
-			 * 완료 버튼에 complete_todo 함수를 연결하기 위하여
-			 *
-			 * <a href="#">완료</a> 를
-			 * <a href="#" onclick="complete_todo(index)">완료</a> 로 변경하여야 합니다.
-			 *
-			 * onclick 속성은 해당 요소가 클릭 되면 자바스크립트 코드 complete_todo(index) 를 실행하라는 의미입니다.
-			 * index는 add_current_todo_element에서 상수로 입력할 것입니다.
-			 *
-			 * @param  Number current_todo_index 완료 상태로 변경시킬 current todo의 인덱스 입니다.
-			 */
-			function complete_todo(current_todo_index) {
-				// 현재 보여지는 todo_list를 선택합니다.
-				var todo_list = todo_lists[current_todo_list_index]
-
-				// current_todo에 있던
-				var todo = todo_list.current_todos.pop(current_todo_index)
-				todo_list.completed_todos.push(todo)
-
-				draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
-			}
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			// 앞으로 선언할 함수는
-			//  1. #todo-list, #current-todos, #completed-todos에 들어갈 각각의 요소를 생성하고
-			//  2. 1에서 생성한 요소를 HTML 문서에 작성하는
-			// 기능을 합니다.
-			//
-			// 1번 함수들은 create_ 로, 2번 함수들은 add_ 로 함수 이름이 시작합니다.
-
-
-			/**
-			 *
-			 * #todo-list 에 들어가는 li 요소를 만들 것입니다.
-				 <ul id="todo-list" class="collection">
-					 <li class="collection-item">학교</li>
-					 <li class="collection-item">회사</li>
-					 <li class="collection-item" editable >프로젝트</li>
-					 ---- 이곳에 새로운 todo list의 제목을 추가합니다.
-					 ---- <li class="...">새로운 제목</li>
-				 </ul>
-			 *
-			 * li 요소를 생성하기 위해 document.createElement(​)를 이용합니다
-			 * li 요소에 속성을 부여하기 위해 li.setAttribute("속성 명", "속성 값")을 이용합니다.
-			 * li 요소의 하위 HTML을 지정하기 위하여 li.innerHTML을 이용합니다.
-			 *
-			 * @param  Number todo_list_title 생성할 todo list의 제목
-			 * @param  Number index           생성할 li 요소의 index. onclick 요소의 값을 할당할 때 사용합니다.
-			 * @return Element                HTML li 요소입니다.
-			 */
-			function create_todo_list_element(todo_list_title, index) {
-				var li = document.createElement("li"); // li 요소를 생성한다.
-				li.setAttribute("class", "collection-item") // li 요소에 클래스를 부여한다
-				// li 요소의 onclick 속성의 값으로 change_todo_list() 함수를 실행하는 JS를 추가한다.
-				// 이로서 #todo-list의 li 요소를 클릭하면 change_todo_list함수가 실행될 것입니다.
-				li.setAttribute("onclick", `change_todo_list(${index})`)
-				li.innerHTML = todo_list_title // li 요소의 값으로 todo list의 제목을 입력한다.
-
-				return li // li 변수는 <li class="collection-item" editable >todo list 가제</li> 입니다.
-			}
-
-			// 아래에 해당하는 div 요소를 만들 것입니다.
-
-			/**
-			 * 아래에 해당하는 div 요솔르 만들 것입니다.
-				<!-- Card template 1 -->
-				<div class="card blue-grey darken-1 z-depth-4">
-					<div class="card-content white-text">
-						<span class="card-title">밥 먹기</span>
-						<p>집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.</p>
-					</div>
-					<div class="card-action">
-						<a href="#">완료</a> <!-- 완료를 클릭하면 complete_todo가 실행되어야 합니다. -->
-						<a href="#">삭제</a> <!-- 삭제를 클릭하면 해당 current todo를 제거해야 합니다. -->
-					</div>
-				</div>
-			 *
-			 * 가장 밖에 있는 ​div 요소를 생성하기 위하여 document.createElement()를 이용합니다.
-			 * 2개의 하위 div 요소는 div.innerHTML 을 이용하여 작성합니다.
-			 *
-			 * @param  String todo_title       생성할 todo의 제목
-			 * @param  String todo_description 생성할 todo의 설명
-			 * @param  Number index            생성할 todo의 인덱스
-			 * @return Element                 div 요소
-			 */
-			function create_current_todo_element(todo_title, todo_description, index) {
-				var div = document.createElement("div")
-				div.className = "card blue-grey darken-1 z-depth-4"
-				div.innerHTML = `
-					<div class="card-content white-text">
-						<span class="card-title">${todo_title}</span>
-						<p>${todo_description}</p>
-					</div>
-					<div class="card-action">
-						<a href="#" onclick="complete_todo(${index})">완료</a>
-						<a href="#">삭제</a>
-					</div>
-				`
-				return div
-			}
-
-			/**
-			 * 자식 div .chip 요소를 만들 것입니다.
-			 	<!-- completed todos -->
-				<div id="completed-todos" class="col s3 m3">
-					<div class="chip">대청소</div>
-					<div class="chip">고구마 캐기</div>
-					<div class="chip">로켓단 맞이하기</div>
-				</div>
-				 <!-- completed todos -->
-			 * @param  String todo_title 생성할 todo의 제목입니다.
-			 * @param  Number index      생성할 todo의 인덱스입니다.
-			 * @return Element           div.chip 요소 입니다.
-			 */
-			function create_completed_todo_element(todo_title, index) {
-				var div = document.createElement("div")
-				div.className = "chip" // setAttribute를 이용하지 않고 .className을 이용하여 class 속성을 부여할 수 있습니다.
-				div.innerHTML = todo_title
-				return div
-			}
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			// 위에서 element를 생성하는 함수들을 모두 구현했습니다.
-			// 생성된 element를 HTML 내부로 삽입하는 함수를 구현할 것입니다.
-
-			/**
-			 * #todo-list의 자식으로 삽입할 li요소를 생성한 후 자식으로 삽입합니다.
-			 *
-			 * @param String todo_list_title li 요소의 값으로 지정할 제목입니다.
-			 * @param Number index           change_todo_list 의 인자로 전달할 index 입니다.
-			 */
-			function add_todo_list_element(todo_list_title, index) {
-				var new_todo_list_element = create_todo_list_element(todo_list_title, index)
-				// #todo-list 를 선택하기 위하여 document.querySelector()를 이용합니다.
-				// #todo-list에 li요소를 자식으로 삽입하기 위하여 appendChild를 이용합니다.
-				document.querySelector('#todo-list').appendChild(new_todo_list_element)
-			}
-
-			/**
-			 * #current-todos의 자식으로 삽입할 div.card 요소를 생성한 후 자식으로 삽입합니다.
-			 *
-			 * @param String todo_title       todo의 제목
-			 * @param String todo_description todo의 설명
-			 * @param Number index            complete_todo 의 인자로 전달할 index 입니다.
-			 */
-			function add_current_todo_element(todo_title, todo_description, index) {
-				var new_todo_element = create_current_todo_element(todo_title, todo_description, index)
-				// #current-todos 를 선택하기 위하여 document.querySelector()를 이용합니다.
-				// #current-todos에 위에 생성한 요소를 자식으로 삽입하기 위하여 appendChild를 이용합니다.
-				document.querySelector('#current-todos').appendChild(new_todo_element)
-			}
-
-			/**
-			 * #completed-todos 자식으로 삽입할 div.chip 요소를 생성한 후 자식으로 삽입합니다.
-			 *
-			 * @param String todo_title todo의 제목
-			 * @param Number index      todo의 index
-			 */
-			function add_completed_todo_element(todo_title, index) {
-				var new_todo_element = create_completed_todo_element(todo_title, index)
-				document.querySelector('#completed-todos').appendChild(new_todo_element)
-			}
-
-			////////////////////////////////////////////////////////////
-			////////////////////////////////////////////////////////////
-
-			// 이제 Javascript 변수 todo_lists 와 current_todo_index​를
-			// 실제 HTML문서의 실제 내용을 일치 시키기 위한 함수를 작성할 것입니다.
-			//
-			// 두 변수가 변경될 때 마다 HTML문서를 지우고 다시 작성합니다.
-			// 변수가 변경될 때는 앞에 선언한 change_todo_list, add_todo_list, add_todo, complete_todo 함수가 실행될 떄 ㅇㅂ니다.
-			// 따라서 네개의 함수의 마지막 부분에 HTML문서를 갱신하는 draw 함수를 실행할 것입니다.
-
-			/**
-			 * #todo-list, #current-todos, #completed-todos를 모두 지웁니다.
-			 */
-			function clear() {
-				document.querySelector("#todo-list").innerHTML = ''
-				document.querySelector("#current-todos").innerHTML = ''
-				document.querySelector("#completed-todos").innerHTML = ''
-			}
-
-			/**
-			 * todo_lists 변수의 데이터에 따라 HTML을 다시 작성하는 함수입니다.
-			 * 먼저 #todo-list #current-todos #completed-todos 의 자식 요소들을 모두 지우고 다시 생성합니다.
-			 */
-			function draw() {
-				// 모두 지우기
-				clear()
-
-				// #todo-list 채우기
-				for (var i = 0; i < todo_lists.length; i++) {
-					var todo_list = todo_lists[i]
-					add_todo_list_element(todo_list.title, i)
-				}
-
-				// 현재 선택된 todo list에 대해 #current-todos 와 #completed-todos를 채웁니다.
-				var current_todo_list = todo_lists[current_todo_list_index]
-
-				// #current-todos 채우기
-				for (var i = 0; i < current_todo_list.current_todos.length; i++) {
-					var current_todo = current_todo_list.current_todos[i]
-					add_current_todo_element(current_todo.title, current_todo.description, i)
-				}
-
-				// #completed-todos 채우기
-				for (var i = 0; i < current_todo_list.completed_todos.length; i++) {
-					var completed_todo = current_todo_list.completed_todos[i]
-					add_completed_todo_element(completed_todo.title, i)
-				}
-			}
-
-			// 데이터를 초기화하고, 그에 맞게 HTML문서를 작성합니다.
-			init_data()
-			draw()
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Todo List</title>
+     <!--
+      Materialize CSS, JS파일을 불러들인다.
+       - 불러들인 파일을 통해서 별도의 CSS를 복잡하게 작성하지 않고 클래스만 부여하여 스타일링을 완성할 수 있다.
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <!-- css 파일 불러오기 -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!--
+      container: materialize class
+       - div 요소에 좌우 여백을 만든다.
+    -->
+    <div class="container">
+
+      <!-- header of html -->
+      <!--
+        row: materialize class
+        - 하나의 행을 만든다
+      -->
+      <div id="header" class="row">
+        <h1>Todo List</h1>
+
+        <!--
+          divider: materialize class
+          - 수평 구분선을 긋는다
+        -->
+        <div class="divider"></div>
+      </div>
+      <!-- header of html -->
+
+      <!-- nav of todo -->
+      <div id="nav-todo" class="row">
+        <!--
+          col: materialize class
+           - row를 수직으로 쪼개는 column을 만든다
+
+          s3, m3: materialize class
+           1. 앞 문자는 디스플레이 사이즈를 의미하며, small, midium, large의 약자이다
+            - small은 모바일, medium은 테블릿, large는 데스크톱 화면에 대응한다
+           2. 뒤 숫자는 column의 너비 이다.
+            - 한 row가 12의 너비를 가지고 있다고 가정하면, 3개의 div요소에 s3, s6, s3클래스를 각각 부여해서 한 row를 채울 수 있다.
+
+          Todo List에 3, Present Todos에 6, completed todos에 3의 너비를 둔다
+        -->
+
+        <!--
+          flow-text: materialize class
+           - 텍스트를 모바일 환경에 최적화 시켜 보여줌
+        -->
+        <div class="col s3 m3">
+          <h3 class="flow-text">
+            Todo List
+          </h3>
+        </div>
+        <div class="col s6 m6">
+          <h3 class="flow-text">
+            Present Todos
+          </h3>
+        </div>
+        <div class="col s3 m3">
+          <h3 class="flow-text">
+            completed Todos
+          </h3>
+        </div>
+      </div>
+      <!-- nav of todo -->
+
+
+      <!-- content of todo -->
+      <div class="row">
+
+        <!-- todo list -->
+        <div class="col s3 m3">
+          <!--
+            collection: materialize class
+             - http://materializecss.com/collections.html
+          -->
+          <ul id="todo-list" class="collection">
+          </ul>
+        </div>
+        <!-- todo list -->
+
+
+        <!-- current todos -->
+        <div id="current-todos" class="col s6 m6">
+        </div>
+        <!-- current todos -->
+
+
+        <!-- completed todos -->
+        <div id="completed-todos" class="col s3 m3">
+        </div>
+        <!-- completed todos -->
+
+      </div>
+      <!-- content of todo -->
+
+      <!-- button -->
+      <!--
+        fixed-action-btn: materialize class
+         - http://materializecss.com/buttons.html#!
+      -->
+      <div id="button" class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+          <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+          <!-- 각 버튼을 클릭했을 때 todo list를 추가하거나 todo 를 추가합니다. -->
+          <li><a class="btn-floating red" onclick="add_todo_list()"><i class="material-icons">playlist_add</i></a></li>
+          <li><a class="btn-floating yellow darken-1" onclick="add_todo()"><i class="material-icons">note_add</i></a></li>
+        </ul>
+
+      </div>
+      <!-- button -->
+
+    </div>
+    <!-- container -->
+
+
+    <!-- Javascript -->
+    <script>
+      // Javascript 코드는 script 태그 안에 위치합니다.
+      //
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      var todo_lists = []; // tood list 들의 배열입니다.
+      var current_todo_list_index = 0; // 현재 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      /**
+       * 앞에 선언한 두 전역변수를 초기화합니다.
+       * 지금은 미리 지정한 데이터로만 초기화 하지만,
+       * 웹 서버를 만든다면 서버에서 데이터를 가져오는 부분을 init_data에서 처리할 것입니다.
+       */
+      function init_data() {
+        current_todo_list_index = 0; // 현재 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
+        todo_lists = [
+          // 하나의 Todo list 는 title, current_todos, completed_todo 로 구서되어 있습니다.
+          // title은 #todo-list 에 보여지는 todo list의 제목입니다
+          // current_todos는 #current-todos 에 보여지는 개별적인 todo 들의 배열입니다.
+          // completed_todos는 #completed-todos 에 보여지는 완료한 todo 들의 배열입니다.
+
+          // 앞으로 작성할 JS 코드를 통해 페이지에 보여지는 Todo 들을 조작할 것입니다.
+          // 필요한 기능은
+          //  0. Todo List 선택하기
+          //  1. Todo List 추가하기
+          //  2. Todo 추가하기
+          //  3. Todo를 완료 상태로 변경하기
+          // 입니다.
+
+          // 학교 Todo list
+          {
+            title: '학교',
+            current_todos: [
+              { title: '밥 먹기', description: '집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.' },
+              { title: '빨래', description: '주말에 세탁기를 돌리고 세탁소에서 옷을 가져오자.' },
+            ],
+            completed_todos: [
+              { title: '로켓단 맞이하기', description: '' },
+              { title: '고구마 캐기', description: '자색 고구마는 정말 맛있다.' },
+            ],
+          },
+
+          // 회사 Todo list
+          {
+            title: '회사',
+            current_todos: [
+              { title: 'Facebook 게시하기', description: '카드 뉴스를 금요일 저녁에 업로드하자.' },
+              { title: '회의 준비', description: '앞으로 진행할 프로젝트에 대해 요약하고 아이데이션을 위한 자료를 만들자.' },
+            ],
+            completed_todos: [
+              { title: '웹 서버 프로토타입 개발', description: '요구사항을 간단히 구현해 피드백을 받아보자.' },
+            ],
+          },
+
+          // 웹 서버 Todo List
+          {
+            title: '웹 서버',
+            current_todos: [
+              { title: '결제 페이지', description: '결제 과정을 처리하는 페이지를 만들자' },
+              { title: '결제 API', description: '서버에서 결제를 진행할 API를 만들자' },
+            ],
+            completed_todos: [
+              { title: '메인 페이지', description: '메인 페이지 퍼블리시' },
+              { title: '프로젝트 디테일 페이지', description: '프로젝트 디테일 페이지 퍼블리시' },
+              { title: '프로젝트 댓글 페이지', description: '프로젝트 댓글 페이지 퍼블리시' },
+            ],
+          },
+        ];
+      }
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      // 앞으로 선언할 4개의 함수를 통해 todo list 의 정보를 조작할 것입니다.
+      // 새로운 todo list, todo를 만들 때, todo를 완료할 때, 앞에 선언된 todo_lists 변수는 계속 변할 것입니다.
+      // 사용자의 행동, 이벤트(버튼 클릭 등)으로 JS 변수를 조작 해 봅시다.
+      //
+      // *** 아래 4 함수는 HTML을 작성하는 것이 아니라 JS 변수르 조작하는 것 뿐입니다
+      // *** JS 변수 값에 따라 HTML 문서를 작성하는 것은 이 다음 섹션에서 다룹니다.
+      // *** javascript를 조작하는 것과 HTML 문서를 실제로 작성하는 것은 별개라는 것을 명심 해 주세요.
+
+
+      /**
+       * change_todo_list 함수는 현재 선택된 todo list를 변경합니다.
+       * 브라우저가 로딩되면 0번째 todo list를 가리키도록 초기화하였지만
+       * 사용자가 다른 todo list를 선택할 수 있습니다.
+       * 이 함수는 #todo-list li 를 클릭할 때 실행되어야 합니다.
+       *
+       *   - 아래 보이는 @param은 함수의 인자를, @return은 함수의 반환 값을 의미합니다.
+       *   - @param, @return 다음에는 인자의 자료형, 변수명, 변수의 설명이 이어집니다.
+       *
+       * @param  Number   new_todo_list_index 새로 선택할 list의 인덱스 입니다.
+       * @return 이 함수는 값을 반환하지 않습니다.
+       */
+      function change_todo_list(new_todo_list_index) {
+        current_todo_list_index = new_todo_list_index;
+        draw()
+      }
+
+      /**
+       * add_todo_list 함수는 새로운 todo list를 생성합니다.
+       * 사용자로부터 todo list의 제목을 입력받아야 하기 때문에 prompt() 를 이용합니다.
+       */
+      function add_todo_list() {
+        // prompt 함수는 python의 input 함수와 유사합니다.
+        var title = prompt('생성할 Todo List의 제목을 입력하세요.')
+
+        var new_todo_list = {
+          title: title,
+          current_todos: [],
+          completed_todos: [],
+        }
+
+        todo_lists.push(new_todo_list)
+
+        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
+      }
+
+      /**
+       * 새로운 todo를 생성해 #current-todos를 갱신합니다.
+       */
+      function add_todo() {
+        var title = prompt('생성할 Todo의 제목을 입력하세요.')
+        var description = prompt('생성할 Todo의 설명을 입력하세요.')
+
+        // 현재 보여지는 todo_list를 선택합니다.
+        var todo_list = todo_lists[current_todo_list_index]
+        var new_todo = {
+          title: title,
+          description: description
+        }
+        todo_list.current_todos.push(new_todo)
+
+        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
+      }
+
+      /**
+       * current todo를 완료 상태로 변경합니다.
+       * 이 함수는 완료 버튼을 클릭하면 실행되어야 합니다.
+       * 완료 버튼에 complete_todo 함수를 연결하기 위하여
+       *
+       * <a href="#">완료</a> 를
+       * <a href="#" onclick="complete_todo(index)">완료</a> 로 변경하여야 합니다.
+       *
+       * onclick 속성은 해당 요소가 클릭 되면 자바스크립트 코드 complete_todo(index) 를 실행하라는 의미입니다.
+       * index는 add_current_todo_element에서 상수로 입력할 것입니다.
+       *
+       * @param  Number current_todo_index 완료 상태로 변경시킬 current todo의 인덱스 입니다.
+       */
+      function complete_todo(current_todo_index) {
+        // 현재 보여지는 todo_list를 선택합니다.
+        var todo_list = todo_lists[current_todo_list_index]
+
+        // current_todo에 있던
+        var todo = todo_list.current_todos.pop(current_todo_index)
+        todo_list.completed_todos.push(todo)
+
+        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
+      }
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      // 앞으로 선언할 함수는
+      //  1. #todo-list, #current-todos, #completed-todos에 들어갈 각각의 요소를 생성하고
+      //  2. 1에서 생성한 요소를 HTML 문서에 작성하는
+      // 기능을 합니다.
+      //
+      // 1번 함수들은 create_ 로, 2번 함수들은 add_ 로 함수 이름이 시작합니다.
+
+
+      /**
+       *
+       * #todo-list 에 들어가는 li 요소를 만들 것입니다.
+         <ul id="todo-list" class="collection">
+           <li class="collection-item">학교</li>
+           <li class="collection-item">회사</li>
+           <li class="collection-item" editable >프로젝트</li>
+           ---- 이곳에 새로운 todo list의 제목을 추가합니다.
+           ---- <li class="...">새로운 제목</li>
+         </ul>
+       *
+       * li 요소를 생성하기 위해 document.createElement(​)를 이용합니다
+       * li 요소에 속성을 부여하기 위해 li.setAttribute("속성 명", "속성 값")을 이용합니다.
+       * li 요소의 하위 HTML을 지정하기 위하여 li.innerHTML을 이용합니다.
+       *
+       * @param  Number todo_list_title 생성할 todo list의 제목
+       * @param  Number index           생성할 li 요소의 index. onclick 요소의 값을 할당할 때 사용합니다.
+       * @return Element                HTML li 요소입니다.
+       */
+      function create_todo_list_element(todo_list_title, index) {
+        var li = document.createElement("li"); // li 요소를 생성한다.
+        li.setAttribute("class", "collection-item") // li 요소에 클래스를 부여한다
+        // li 요소의 onclick 속성의 값으로 change_todo_list() 함수를 실행하는 JS를 추가한다.
+        // 이로서 #todo-list의 li 요소를 클릭하면 change_todo_list함수가 실행될 것입니다.
+        li.setAttribute("onclick", `change_todo_list(${index})`)
+        li.innerHTML = todo_list_title // li 요소의 값으로 todo list의 제목을 입력한다.
+
+        return li // li 변수는 <li class="collection-item" editable >todo list 가제</li> 입니다.
+      }
+
+      // 아래에 해당하는 div 요소를 만들 것입니다.
+
+      /**
+       * 아래에 해당하는 div 요솔르 만들 것입니다.
+        <!-- Card template 1 -->
+        <div class="card blue-grey darken-1 z-depth-4">
+          <div class="card-content white-text">
+            <span class="card-title">밥 먹기</span>
+            <p>집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.</p>
+          </div>
+          <div class="card-action">
+            <a href="#">완료</a> <!-- 완료를 클릭하면 complete_todo가 실행되어야 합니다. -->
+            <a href="#">삭제</a> <!-- 삭제를 클릭하면 해당 current todo를 제거해야 합니다. -->
+          </div>
+        </div>
+       *
+       * 가장 밖에 있는 ​div 요소를 생성하기 위하여 document.createElement()를 이용합니다.
+       * 2개의 하위 div 요소는 div.innerHTML 을 이용하여 작성합니다.
+       *
+       * @param  String todo_title       생성할 todo의 제목
+       * @param  String todo_description 생성할 todo의 설명
+       * @param  Number index            생성할 todo의 인덱스
+       * @return Element                 div 요소
+       */
+      function create_current_todo_element(todo_title, todo_description, index) {
+        var div = document.createElement("div")
+        div.className = "card blue-grey darken-1 z-depth-4"
+        div.innerHTML = `
+          <div class="card-content white-text">
+            <span class="card-title">${todo_title}</span>
+            <p>${todo_description}</p>
+          </div>
+          <div class="card-action">
+            <a href="#" onclick="complete_todo(${index})">완료</a>
+            <a href="#">삭제</a>
+          </div>
+        `
+        return div
+      }
+
+      /**
+       * 자식 div .chip 요소를 만들 것입니다.
+         <!-- completed todos -->
+        <div id="completed-todos" class="col s3 m3">
+          <div class="chip">대청소</div>
+          <div class="chip">고구마 캐기</div>
+          <div class="chip">로켓단 맞이하기</div>
+        </div>
+         <!-- completed todos -->
+       * @param  String todo_title 생성할 todo의 제목입니다.
+       * @param  Number index      생성할 todo의 인덱스입니다.
+       * @return Element           div.chip 요소 입니다.
+       */
+      function create_completed_todo_element(todo_title, index) {
+        var div = document.createElement("div")
+        div.className = "chip" // setAttribute를 이용하지 않고 .className을 이용하여 class 속성을 부여할 수 있습니다.
+        div.innerHTML = todo_title
+        return div
+      }
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      // 위에서 element를 생성하는 함수들을 모두 구현했습니다.
+      // 생성된 element를 HTML 내부로 삽입하는 함수를 구현할 것입니다.
+
+      /**
+       * #todo-list의 자식으로 삽입할 li요소를 생성한 후 자식으로 삽입합니다.
+       *
+       * @param String todo_list_title li 요소의 값으로 지정할 제목입니다.
+       * @param Number index           change_todo_list 의 인자로 전달할 index 입니다.
+       */
+      function add_todo_list_element(todo_list_title, index) {
+        var new_todo_list_element = create_todo_list_element(todo_list_title, index)
+        // #todo-list 를 선택하기 위하여 document.querySelector()를 이용합니다.
+        // #todo-list에 li요소를 자식으로 삽입하기 위하여 appendChild를 이용합니다.
+        document.querySelector('#todo-list').appendChild(new_todo_list_element)
+      }
+
+      /**
+       * #current-todos의 자식으로 삽입할 div.card 요소를 생성한 후 자식으로 삽입합니다.
+       *
+       * @param String todo_title       todo의 제목
+       * @param String todo_description todo의 설명
+       * @param Number index            complete_todo 의 인자로 전달할 index 입니다.
+       */
+      function add_current_todo_element(todo_title, todo_description, index) {
+        var new_todo_element = create_current_todo_element(todo_title, todo_description, index)
+        // #current-todos 를 선택하기 위하여 document.querySelector()를 이용합니다.
+        // #current-todos에 위에 생성한 요소를 자식으로 삽입하기 위하여 appendChild를 이용합니다.
+        document.querySelector('#current-todos').appendChild(new_todo_element)
+      }
+
+      /**
+       * #completed-todos 자식으로 삽입할 div.chip 요소를 생성한 후 자식으로 삽입합니다.
+       *
+       * @param String todo_title todo의 제목
+       * @param Number index      todo의 index
+       */
+      function add_completed_todo_element(todo_title, index) {
+        var new_todo_element = create_completed_todo_element(todo_title, index)
+        document.querySelector('#completed-todos').appendChild(new_todo_element)
+      }
+
+      ////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////
+
+      // 이제 Javascript 변수 todo_lists 와 current_todo_index​를
+      // 실제 HTML문서의 실제 내용을 일치 시키기 위한 함수를 작성할 것입니다.
+      //
+      // 두 변수가 변경될 때 마다 HTML문서를 지우고 다시 작성합니다.
+      // 변수가 변경될 때는 앞에 선언한 change_todo_list, add_todo_list, add_todo, complete_todo 함수가 실행될 떄 ㅇㅂ니다.
+      // 따라서 네개의 함수의 마지막 부분에 HTML문서를 갱신하는 draw 함수를 실행할 것입니다.
+
+      /**
+       * #todo-list, #current-todos, #completed-todos를 모두 지웁니다.
+       */
+      function clear() {
+        document.querySelector("#todo-list").innerHTML = ''
+        document.querySelector("#current-todos").innerHTML = ''
+        document.querySelector("#completed-todos").innerHTML = ''
+      }
+
+      /**
+       * todo_lists 변수의 데이터에 따라 HTML을 다시 작성하는 함수입니다.
+       * 먼저 #todo-list #current-todos #completed-todos 의 자식 요소들을 모두 지우고 다시 생성합니다.
+       */
+      function draw() {
+        // 모두 지우기
+        clear()
+
+        // #todo-list 채우기
+        for (var i = 0; i < todo_lists.length; i++) {
+          var todo_list = todo_lists[i]
+          add_todo_list_element(todo_list.title, i)
+        }
+
+        // 현재 선택된 todo list에 대해 #current-todos 와 #completed-todos를 채웁니다.
+        var current_todo_list = todo_lists[current_todo_list_index]
+
+        // #current-todos 채우기
+        for (var i = 0; i < current_todo_list.current_todos.length; i++) {
+          var current_todo = current_todo_list.current_todos[i]
+          add_current_todo_element(current_todo.title, current_todo.description, i)
+        }
+
+        // #completed-todos 채우기
+        for (var i = 0; i < current_todo_list.completed_todos.length; i++) {
+          var completed_todo = current_todo_list.completed_todos[i]
+          add_completed_todo_element(completed_todo.title, i)
+        }
+      }
+
+      // 데이터를 초기화하고, 그에 맞게 HTML문서를 작성합니다.
+      init_data()
+      draw()
+    </script>
+  </body>
 </html>
