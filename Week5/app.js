@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose'); // mongodb 와 통신할 수 있는 패키지를 로드합니다.
 // mongoose.connect() 를 이용하여,
-mongoose.connect('mongodb://kim:kim@ds052819.mlab.com:52819/kim');
+mongoose.connect('mongodb://<dbuser>:<dbpassword>@<dbhost>/<dbname>');
 
 var app = express();
 
@@ -55,6 +55,7 @@ app.get('/create', function(req, res){
       res.status(500).send('Internal Server Error');
     }
     res.render('create_m', { contents: results }); // mongodb에서 가져온 결과를 contents변수에 저장합니다.
+    // 그리고 '.views/create_m.ejs' 파일을 이용하여 HTML을 만들어 전송합니다.
   });
 });
 

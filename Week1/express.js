@@ -6,8 +6,7 @@ const express = require('express');
 
 // Express를 통해 서버를 만듭니다.
 // app(Application)이라고 변수 이름을 설정한 것은
-// Express Framework 를 통해 만든 Express App 라는 의미입니다.
-// Express 는 단순한 Library가 아니라 Framework로 분류됩니다. 두 용어의 차이는 http://stackoverflow.com/questions/148747/what-is-the-difference-between-a-framework-and-a-library 를 참조하세요.
+// 웹 서버는 웹 어플리캐이션이라고도 불리기 때문입니다.
 const app = express();
 
 // app.get 을 통해 HTTP 요청의 라우팅을 다룰 수 있습니다.
@@ -21,4 +20,3 @@ app.get('/', function(req, res){
 app.listen(3000, function(){
     console.log('Connected 3000 port!!!');
 });
-
