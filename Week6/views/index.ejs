@@ -87,7 +87,7 @@
           -->
           <ul id="todo-list" class="collection">
             <% for(var todo_list of todo_lists) { %>
-              <a href="/todo/<%= todo_list._id %>"><li class="collection-item"><%= todo_list.title %></li></a>
+              <li class="collection-item"><a href="/todo/<%= todo_list._id %>"><%= todo_list.title %></a></li>
             <% } %>
           </ul>
         </div>

@@ -14,7 +14,7 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
-var TodoList = require('../models/todolist');
+var TodoList = require('./models/todolist');
 
 var default_todo_lists = [
   {
