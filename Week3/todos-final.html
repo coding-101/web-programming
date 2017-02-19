@@ -288,8 +288,8 @@
         // 현재 보여지는 todo_list를 선택합니다.
         var todo_list = todo_lists[current_todo_list_index]
 
-        // current_todo에 있던
-        var todo = todo_list.current_todos.pop(current_todo_index)
+        var todo = todo_list.current_todos[current_todo_index]
+        todo_list.current_todos.splice(current_todo_index, 1) // 특정 index에 있는 todo 삭제하기
         todo_list.completed_todos.push(todo)
 
         draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
