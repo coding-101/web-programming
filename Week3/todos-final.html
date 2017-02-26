@@ -300,7 +300,7 @@
         var todo_list = todo_lists[current_todo_list_index]
 
         // current_todo에 있던 todo를 제거합니닫.
-        todo_list.current_todos.pop(current_todo_index)
+        todo_list.current_todos.splice(current_todo_index, 1)
         draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
 

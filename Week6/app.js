@@ -1,8 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var mongoose = require('mongoose'); // mongodb 와 통신할 수 있는 패키지를 로드합니다.
-// mongoose.connect() 를 이용하여,
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/coding-101');
 
 var app = express();
@@ -22,16 +21,18 @@ var default_todo_lists = [
     current_todos: [
       {
         title: '새로운 Todo List 생성하기',
-        description: '오른쪽 하단의 버튼 위에 마우스를 올려 빨간색 작은 아이콘을 클릭하여 새로운 Todo List를 생성 해 보세요!'
+        description: '오른쪽 하단의 버튼 위에 마우스를 올려 빨간색 작은 아이콘을 클릭하여 새로운 Todo List를 생성 해보세요!'
       }
     ],
     completed_todos: []
   }
 ]
 
-// Todo list 가 없을 떈, default_todo_lists를 보여준다.
+// 첫 페이지
+// Todo list 가 있을 때, 첫번째 todo list를 보여준다.
+// Todo list 가 없을 때, default_todo_lists를 보여준다.
 app.get('/todo', function (req, res) {
-    TodoList.find({}, function (err, todo_lists) {
+  TodoList.find({}, function (err, todo_lists) {
     if (err) {
       console.error(err);
       throw err;
@@ -134,7 +135,8 @@ app.post('/todo/:_id/complete_todo', function (req, res) {
       return res.status(500).send(`No such todo list`)
     }
 
-    var todo = todo_list.current_todos.pop(current_todo_index)
+    var todo = todo_list.current_todos[current_todo_index]
+    todo_list.current_todos.splice(current_todo_index, 1)
     todo_list.completed_todos.push(todo)
 
     todo_list.save(function (err, todo_list) {
@@ -159,7 +161,7 @@ app.post('/todo/:_id/delete_todo', function (req, res) {
       return res.status(500).send(`No such todo list`)
     }
 
-    var todo = todo_list.current_todos.pop(current_todo_index)
+    todo_list.current_todos.splice(current_todo_index, 1)
 
     todo_list.save(function (err, todo_list) {
       if (err) {
