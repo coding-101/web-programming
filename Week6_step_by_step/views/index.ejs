@@ -153,9 +153,7 @@
 
     <!-- Javascript -->
     <script>
-      <% if(current_todo_list) { %>
-        var current_todo_list_id = "<%= current_todo_list._id %>";
-      <% } %>
+      var current_todo_list_id = window.location.pathname.split('/')[2]
 
       /**
        * add_todo_list 함수는 새로운 todo list를 생성합니다.
