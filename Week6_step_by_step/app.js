@@ -75,6 +75,103 @@ app.get('/todo/:_id', function (req, res) {
   })
 })
 
+// 새로운 Todo-list 생성
+app.post('/todo', function (req, res) {
+  var title = req.body.title;
+  var new_todo_list = new TodoList({
+    title: title,
+    current_todos: [],
+    completed_todos: []
+  });
+
+  new_todo_list.save(function (err, todo_list) {
+    if (err) {
+      console.error(err);
+      return res.send(err.message)
+    }
+
+    res.json({ todo_list: todo_list })
+  })
+})
+
+// Todo list에 새로운 Todo 추가
+app.post('/todo/:_id', function (req, res) {
+  var _id = req.params._id;
+  var title = req.body.title;
+  var description = req.body.description;
+  var new_todo = {
+    title: title,
+    description: description
+  }
+
+  TodoList.findById(_id, function (err, todo_list) {
+    if (err || !todo_list) {
+      console.error(err);
+      return res.status(500).send(`No such todo list`)
+    }
+
+    todo_list.current_todos.push(new_todo);
+    todo_list.save(function (err, todo_list) {
+      if (err) {
+        console.error(err);
+        return res.send(err.message)
+      }
+
+      res.json({ todo_list: todo_list })
+    })
+  })
+})
+
+// Todo 완료시키기
+app.post('/todo/:_id/complete_todo', function (req, res) {
+  var _id = req.params._id;
+  var current_todo_index = req.body.current_todo_index;
+
+  TodoList.findById(_id, function (err, todo_list) {
+    if (err || !todo_list) {
+      console.error(err);
+      return res.status(500).send(`No such todo list`)
+    }
+
+    var todo = todo_list.current_todos[current_todo_index]
+    todo_list.current_todos.splice(current_todo_index, 1)
+    todo_list.completed_todos.push(todo)
+
+    todo_list.save(function (err, todo_list) {
+      if (err) {
+        console.error(err);
+        return res.send(err.message)
+      }
+
+      res.json({ todo_list: todo_list })
+    })
+  })
+})
+
+// Todo 삭제하기
+app.post('/todo/:_id/delete_todo', function (req, res) {
+  var _id = req.params._id;
+  var current_todo_index = req.body.current_todo_index;
+
+  TodoList.findById(_id, function (err, todo_list) {
+    if (err || !todo_list) {
+      console.error(err);
+      return res.status(500).send(`No such todo list`)
+    }
+
+    todo_list.current_todos.splice(current_todo_index, 1)
+
+    todo_list.save(function (err, todo_list) {
+      if (err) {
+        console.error(err);
+        return res.send(err.message)
+      }
+
+      res.json({ todo_list: todo_list })
+    })
+  })
+})
+
 app.listen(3000, function(){
   console.log('Connected, 3000 port!');
 });

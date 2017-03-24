@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
     <!-- css 파일 불러오기 -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
 
@@ -165,13 +165,16 @@
         // prompt 함수는 python의 input 함수와 유사합니다.
         var title = prompt('생성할 Todo List의 제목을 입력하세요.')
 
-        var new_todo_list = {
-          title: title,
-          current_todos: [],
-          completed_todos: [],
-        }
-
-        todo_lists.push(new_todo_list)
+        $.ajax({
+          method: 'post',
+          url: '/todo/',
+          data: {
+            title: title
+          }
+        })
+          .done(function (data) {
+            window.location = `/todo/${data.todo_list._id}`
+          })
       }
 
       /**
@@ -182,12 +185,17 @@
         var description = prompt('생성할 Todo의 설명을 입력하세요.')
 
         // 현재 보여지는 todo_list를 선택합니다.
-        var todo_list = todo_lists[current_todo_list_index]
-        var new_todo = {
-          title: title,
-          description: description
-        }
-        todo_list.current_todos.push(new_todo)
+        $.ajax({
+          method: 'post',
+          url: `/todo/${current_todo_list_id}`,
+          data: {
+            title: title,
+            description: description
+          }
+        })
+          .done(function (data) {
+            window.location = `/todo/${data.todo_list._id}`
+          })
       }
 
       /**
@@ -204,20 +212,29 @@
        * @param  Number current_todo_index 완료 상태로 변경시킬 current todo의 인덱스 입니다.
        */
       function complete_todo(current_todo_index) {
-        // 현재 보여지는 todo_list를 선택합니다.
-        var todo_list = todo_lists[current_todo_list_index]
-
-        var todo = todo_list.current_todos[current_todo_index]
-        todo_list.current_todos.splice(current_todo_index, 1) // 특정 index에 있는 todo 삭제하기
-        todo_list.completed_todos.push(todo)
+        $.ajax({
+          method: 'post',
+          url: `/todo/${current_todo_list_id}/complete_todo`,
+          data: {
+            current_todo_index: current_todo_index
+          }
+        })
+          .done(function (data) {
+            window.location = `/todo/${data.todo_list._id}`
+          })
       }
 
       function delete_todo(current_todo_index) {
-        // 현재 보여지는 todo_list를 선택합니다.
-        var todo_list = todo_lists[current_todo_list_index]
-
-        // current_todo에 있던 todo를 제거합니닫.
-        todo_list.current_todos.splice(current_todo_index, 1)
+        $.ajax({
+          method: 'post',
+          url: `/todo/${current_todo_list_id}/delete_todo`,
+          data: {
+            current_todo_index: current_todo_index
+          }
+        })
+          .done(function (data) {
+            window.location = `/todo/${data.todo_list._id}`
+          })
       }
     </script>
   </body>
