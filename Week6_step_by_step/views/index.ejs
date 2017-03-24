@@ -88,6 +88,9 @@
              - http://materializecss.com/collections.html
           -->
           <ul id="todo-list" class="collection">
+            <% for(var todo_list of todo_lists) { %>
+              <li class="collection-item"><a href="/todo/<%= todo_list._id %>"><%= todo_list.title %></a></li>
+            <% } %>
           </ul>
         </div>
         <!-- todo list -->
@@ -95,12 +98,31 @@
 
         <!-- current todos -->
         <div id="current-todos" class="col s6 m6">
+          <% for(var i = 0; i < current_todo_list.current_todos.length; i++) {
+            var current_todo = current_todo_list.current_todos[i];
+          %>
+            <div class="card blue-grey darken-1 z-depth-4">
+              <div class="card-content white-text">
+                <span class="card-title"><%= current_todo.title %></span>
+                <p><%= current_todo.description %></p>
+              </div>
+              <div class="card-action">
+                <a href="#" onclick="complete_todo(<%= i %>)">완료</a>
+                <a href="#" onclick="delete_todo(<%= i %>)">삭제</a>
+              </div>
+            </div>
+          <% } %>
         </div>
         <!-- current todos -->
 
 
         <!-- completed todos -->
         <div id="completed-todos" class="col s3 m3">
+          <% for(var completed_todo of current_todo_list.completed_todos) { %>
+            <div class="chip">
+              <%= completed_todo.title %>
+            </div>
+          <% } %>
         </div>
         <!-- completed todos -->
 
@@ -131,108 +153,9 @@
 
     <!-- Javascript -->
     <script>
-      // Javascript 코드는 script 태그 안에 위치합니다.
-      //
-
-      ////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////
-
-      var todo_lists = []; // tood list 들의 배열입니다.
-      var current_todo_list_index = 0; // 현재 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
-
-      ////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////
-
-      /**
-       * 앞에 선언한 두 전역변수를 초기화합니다.
-       * 지금은 미리 지정한 데이터로만 초기화 하지만,
-       * 웹 서버를 만든다면 서버에서 데이터를 가져오는 부분을 init_data에서 처리할 것입니다.
-       */
-      function init_data() {
-        current_todo_list_index = 0; // 현재 보여지는 Todo List를 가리키는 인덱스 입니다. 페이지가 로딩되었을 때 '학교 Todo list'를 보여주는 것을 기본으로 합니다.
-        todo_lists = [
-          // 하나의 Todo list 는 title, current_todos, completed_todo 로 구서되어 있습니다.
-          // title은 #todo-list 에 보여지는 todo list의 제목입니다
-          // current_todos는 #current-todos 에 보여지는 개별적인 todo 들의 배열입니다.
-          // completed_todos는 #completed-todos 에 보여지는 완료한 todo 들의 배열입니다.
-
-          // 앞으로 작성할 JS 코드를 통해 페이지에 보여지는 Todo 들을 조작할 것입니다.
-          // 필요한 기능은
-          //  0. Todo List 선택하기
-          //  1. Todo List 추가하기
-          //  2. Todo 추가하기
-          //  3. Todo를 완료 상태로 변경하기
-          // 입니다.
-
-          // 학교 Todo list
-          {
-            title: '학교',
-            current_todos: [
-              { title: '밥 먹기', description: '집에서 밥을 먹는다. 오늘은 짜파게티에 너구리를 끓여서 먹어보자.' },
-              { title: '빨래', description: '주말에 세탁기를 돌리고 세탁소에서 옷을 가져오자.' },
-            ],
-            completed_todos: [
-              { title: '로켓단 맞이하기', description: '' },
-              { title: '고구마 캐기', description: '자색 고구마는 정말 맛있다.' },
-            ],
-          },
-
-          // 회사 Todo list
-          {
-            title: '회사',
-            current_todos: [
-              { title: 'Facebook 게시하기', description: '카드 뉴스를 금요일 저녁에 업로드하자.' },
-              { title: '회의 준비', description: '앞으로 진행할 프로젝트에 대해 요약하고 아이데이션을 위한 자료를 만들자.' },
-            ],
-            completed_todos: [
-              { title: '웹 서버 프로토타입 개발', description: '요구사항을 간단히 구현해 피드백을 받아보자.' },
-            ],
-          },
-
-          // 웹 서버 Todo List
-          {
-            title: '웹 서버',
-            current_todos: [
-              { title: '결제 페이지', description: '결제 과정을 처리하는 페이지를 만들자' },
-              { title: '결제 API', description: '서버에서 결제를 진행할 API를 만들자' },
-            ],
-            completed_todos: [
-              { title: '메인 페이지', description: '메인 페이지 퍼블리시' },
-              { title: '프로젝트 디테일 페이지', description: '프로젝트 디테일 페이지 퍼블리시' },
-              { title: '프로젝트 댓글 페이지', description: '프로젝트 댓글 페이지 퍼블리시' },
-            ],
-          },
-        ];
-      }
-
-      ////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////
-
-      // 앞으로 선언할 4개의 함수를 통해 todo list 의 정보를 조작할 것입니다.
-      // 새로운 todo list, todo를 만들 때, todo를 완료할 때, 앞에 선언된 todo_lists 변수는 계속 변할 것입니다.
-      // 사용자의 행동, 이벤트(버튼 클릭 등)으로 JS 변수를 조작 해 봅시다.
-      //
-      // *** 아래 4 함수는 HTML을 작성하는 것이 아니라 JS 변수르 조작하는 것 뿐입니다
-      // *** JS 변수 값에 따라 HTML 문서를 작성하는 것은 이 다음 섹션에서 다룹니다.
-      // *** javascript를 조작하는 것과 HTML 문서를 실제로 작성하는 것은 별개라는 것을 명심 해 주세요.
-
-
-      /**
-       * change_todo_list 함수는 현재 선택된 todo list를 변경합니다.
-       * 브라우저가 로딩되면 0번째 todo list를 가리키도록 초기화하였지만
-       * 사용자가 다른 todo list를 선택할 수 있습니다.
-       * 이 함수는 #todo-list li 를 클릭할 때 실행되어야 합니다.
-       *
-       *   - 아래 보이는 @param은 함수의 인자를, @return은 함수의 반환 값을 의미합니다.
-       *   - @param, @return 다음에는 인자의 자료형, 변수명, 변수의 설명이 이어집니다.
-       *
-       * @param  Number   new_todo_list_index 새로 선택할 list의 인덱스 입니다.
-       * @return 이 함수는 값을 반환하지 않습니다.
-       */
-      function change_todo_list(new_todo_list_index) {
-        current_todo_list_index = new_todo_list_index;
-        draw()
-      }
+      <% if(current_todo_list) { %>
+        var current_todo_list_id = "<%= current_todo_list._id %>";
+      <% } %>
 
       /**
        * add_todo_list 함수는 새로운 todo list를 생성합니다.
@@ -249,8 +172,6 @@
         }
 
         todo_lists.push(new_todo_list)
-
-        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
 
       /**
@@ -267,8 +188,6 @@
           description: description
         }
         todo_list.current_todos.push(new_todo)
-
-        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
 
       /**
@@ -291,8 +210,6 @@
         var todo = todo_list.current_todos[current_todo_index]
         todo_list.current_todos.splice(current_todo_index, 1) // 특정 index에 있는 todo 삭제하기
         todo_list.completed_todos.push(todo)
-
-        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
 
       function delete_todo(current_todo_index) {
@@ -301,79 +218,7 @@
 
         // current_todo에 있던 todo를 제거합니닫.
         todo_list.current_todos.splice(current_todo_index, 1)
-        draw() // 변경된 todo_lists에 따라 HTML을 다시 생성합니다.
       }
-
-
-
-      ////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////
-      // 이 부분은 서버에서 구현하는 기능을 웹 브라우저에서 구현하기 위한 코드입니다.
-      // 4주차 이후 실습할 ejs를 이용하여 대체할 수 있습니다.
-      ////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////
-
-
-      // Javascript 변수 todo_lists 와 current_todo_index​를
-      // 실제 HTML문서의 실제 내용을 일치 시키기 위한 함수를 작성할 것입니다.
-      //
-      // 두 변수가 변경될 때 마다 HTML문서를 지우고 다시 작성합니다.
-      // 변수가 변경될 때는 앞에 선언한 change_todo_list, add_todo_list, add_todo, complete_todo 함수가 실행될 떄 ㅇㅂ니다.
-      // 따라서 네개의 함수의 마지막 부분에 HTML문서를 갱신하는 draw 함수를 실행할 것입니다.
-
-      /**
-       * todo_lists 변수의 데이터에 따라 HTML을 다시 작성하는 함수입니다.
-       * 먼저 #todo-list #current-todos #completed-todos 의 자식 요소들을 모두 지우고 다시 생성합니다.
-       */
-      function draw() {
-        // 모두 지우기
-        $("#todo-list").html('')
-        $("#current-todos").html('')
-        $("#completed-todos").html('')
-
-        // #todo-list 채우기
-        for (var i = 0; i < todo_lists.length; i++) {
-          var todo_list = todo_lists[i]
-          var title = todo_list.title
-          $("#todo-list").append(`
-            <li class="collection-item" onclick="change_todo_list(${i})">${title}</li>
-            `)
-        }
-
-        // 현재 선택된 todo list에 대해 #current-todos 와 #completed-todos를 채웁니다.
-        var current_todo_list = todo_lists[current_todo_list_index]
-
-        // #current-todos 채우기
-        for (var i = 0; i < current_todo_list.current_todos.length; i++) {
-          var current_todo = current_todo_list.current_todos[i]
-          $("#current-todos").append(`
-            <div class="card blue-grey darken-1 z-depth-4">
-              <div class="card-content white-text">
-                <span class="card-title">${current_todo.title}</span>
-                <p>${current_todo.description}</p>
-              </div>
-              <div class="card-action">
-                <a href="#" onclick="complete_todo(${i})">완료</a>
-                <a href="#" onclick="delete_todo(${i})">삭제</a>
-              </div>
-            </div>
-            `)
-        }
-
-        // #completed-todos 채우기
-        for (var i = 0; i < current_todo_list.completed_todos.length; i++) {
-          var completed_todo = current_todo_list.completed_todos[i]
-          $("#completed-todos").append(`
-            <div class="chip">
-              ${completed_todo.title}
-            </div>
-            `)
-        }
-      }
-
-      // 데이터를 초기화하고, 그에 맞게 HTML문서를 작성합니다.
-      init_data()
-      draw()
     </script>
   </body>
 </html>

@@ -27,8 +27,52 @@ var default_todo_lists = [
   }
 ]
 
-app.get('/', function (req, res) {
-  res.render('index');
+// 첫 페이지
+// Todo list 가 있을 때, 첫번째 todo list를 보여준다.
+// Todo list 가 없을 때, default_todo_lists를 보여준다.
+app.get('/todo', function (req, res) {
+  TodoList.find({}, function (err, todo_lists) {
+    if (err) {
+      console.error(err);
+      throw err;
+    }
+
+    if (todo_lists.length === 0) {
+      todo_lists = default_todo_lists;
+    }
+
+    var current_todo_list = todo_lists[0];
+
+    res.render('index', {
+      todo_lists: todo_lists,
+      current_todo_list: current_todo_list
+    });
+  })
+})
+
+// 특정 id를 가지는 Todo list 조회
+app.get('/todo/:_id', function (req, res) {
+  var _id = req.params._id
+
+
+  TodoList.findById(_id, function (err, current_todo_list) { // 변수 todo의 _id는 req.params.id 와 동일!
+    if (err || !current_todo_list) {
+      return res.redirect('/todo')
+    }
+
+    TodoList.find({}, function (err, todo_lists) {
+      if (err) {
+        console.error(err);
+        throw err;
+      }
+
+      res.render('index', {
+        todo_lists: todo_lists,
+        current_todo_list: current_todo_list
+      })
+    })
+
+  })
 })
 
 app.listen(3000, function(){
