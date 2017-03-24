@@ -1,0 +1,32 @@
+h1 {
+	font-size: 36px;
+}
+
+html {
+	font-family: GillSans, Calibri, Trebuchet, sans-serif;
+}
+
+#header h1 {
+	padding: 3% 0%;
+	text-align: center;
+}
+
+#nav-todo h3 {
+	text-align: center;
+	color: dimgrey;
+}
+
+/* todo-list 의 li 요소들 선택 */
+#todo-list li {
+	color: rgba(0,0,0,0.6);
+}
+
+/* 홀수번째 li 요소 선택 */
+#todo-list li:nth-child(odd) {
+	background-color: #e6e6e6;
+}
+
+/* 마우스가 올라가있는 li 요소 선택 */
+#todo-list li:hover {
+	background-color: #f0f5f5;
+}
