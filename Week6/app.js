@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/coding-101');
+mongoose.connect('mongodb://pjh:pjh@ds137110.mlab.com:37110/coding101');
 
 var app = express();
 
