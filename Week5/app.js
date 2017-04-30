@@ -47,16 +47,9 @@ Content.find({}, function(err, contents) { // 우선 mongodb에 Content가 있�
 });
 
 app.get('/create', function(req, res){
-  // create_m.ejs에 전달할 contents 변수에 저장할 값을 mongodb에서 가져옵니다.
-
-  Content.find({}, function(err, results){
-    if(err){ // 에러가 발생할 경우 HTTP Status code 500과 함꼐, 에러 메시지를 전송합니다.
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    }
-    res.render('create_m', { contents: results }); // mongodb에서 가져온 결과를 contents변수에 저장합니다.
-    // 그리고 '.views/create_m.ejs' 파일을 이용하여 HTML을 만들어 전송합니다.
-  });
+  // DB와 관계 없이, create_m.ejs 를 바로 보내주면 됩니다.
+  
+  res.render('create_m');
 });
 
 // POST '/create' 요청을 처리합니다.
